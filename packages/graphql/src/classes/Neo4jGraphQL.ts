@@ -18,10 +18,10 @@
  */
 
 import { Driver } from "neo4j-driver";
-import { GraphQLSchema } from "graphql";
+import { GraphQLSchema, lexicographicSortSchema } from "graphql";
 import { addResolversToSchema, IExecutableSchemaDefinition, makeExecutableSchema } from "@graphql-tools/schema";
 import { composeResolvers } from "@graphql-tools/resolvers-composition";
-import { forEachField, IResolvers } from "@graphql-tools/utils";
+import { forEachField, IResolvers, printSchemaWithDirectives } from "@graphql-tools/utils";
 import { mergeResolvers } from "@graphql-tools/merge";
 import { Secret } from "jsonwebtoken";
 import type { DriverConfig, CypherQueryOptions, Neo4jGraphQLPlugins } from "../types";
@@ -190,6 +190,10 @@ class Neo4jGraphQL {
 
             resolve(schema);
         });
+    }
+
+    public async printSchema(): Promise<string> {
+        return printSchemaWithDirectives(lexicographicSortSchema(await this.getSchema()));
     }
 }
 

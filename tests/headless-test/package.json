@@ -1,0 +1,11 @@
+{
+    "name": "headless-test",
+    "dependencies": {
+        "@neo4j/graphql": "./package",
+        "puppeteer": "13.3.2"
+    },
+    "scripts": {
+        "test": "node test.js",
+        "test-docker": "docker-compose up --build --abort-on-container-exit"
+    }
+}
